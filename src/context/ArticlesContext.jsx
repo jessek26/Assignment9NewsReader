@@ -51,6 +51,10 @@ const { user } = useAuth();
     return userArticles.some(a => a.url === url);
   };
 
+  const getAllUserArticles = () => {
+    return savedArticlesByUser;
+  };
+
   return (
     <ArticlesContext.Provider 
       value={{ 
@@ -58,7 +62,8 @@ const { user } = useAuth();
         saveArticle, 
         removeArticle, 
         isArticleSaved,
-        savedArticlesByUser
+        savedArticlesByUser,
+        getAllUserArticles
       }}
     >
       {children}

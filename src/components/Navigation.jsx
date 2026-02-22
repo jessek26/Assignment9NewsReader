@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 function Navigation() {
   const location = useLocation();
   const { getUserSavedArticles} = useArticles();
-  const { user, logout, isAuthenticated } = useAuth();
+  const { user, logout, isAuthenticated, isAdmin } = useAuth();
 
   return (
     <nav>
@@ -25,14 +25,20 @@ function Navigation() {
             >
               Search
             </Link>
-
-            
+            {isAuthenticated && (
             <Link 
               to="/saved" 
               className={`nav-link ${location.pathname === '/saved' ? 'active' : ''}`}
             >
               Saved Articles ({getUserSavedArticles().length || 0})
             </Link>
+            )}
+            {isAdmin() && (
+              <Link to="/admin"
+              className={`nav-link ${location.pathname === '/admin' ? 'active' : ''}`}>
+                Admin Page
+              </Link>
+            )}
           </div>
         </div>
         {isAuthenticated ? (

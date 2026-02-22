@@ -41,12 +41,17 @@ export function AuthProvider({ children }) {
         return user?.role === role;
     };
 
+    const isAdmin = ()  => {
+        return user?.role === 'admin';
+    };
+
     const value = {
         user,
         isAuthenticated,
         login,
         logout,
-        hasRole
+        hasRole,
+        isAdmin
       };
 
       return(
