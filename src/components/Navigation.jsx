@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 
 function Navigation() {
   const location = useLocation();
-  const { savedArticles } = useArticles();
+  const { getUserSavedArticles} = useArticles();
   const { user, logout, isAuthenticated } = useAuth();
 
   return (
@@ -31,7 +31,7 @@ function Navigation() {
               to="/saved" 
               className={`nav-link ${location.pathname === '/saved' ? 'active' : ''}`}
             >
-              Saved Articles ({savedArticles.length || 0})
+              Saved Articles ({getUserSavedArticles().length || 0})
             </Link>
           </div>
         </div>
