@@ -1,9 +1,11 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useArticles } from '../context/ArticlesContext';
+import { useAuth } from '../context/AuthContext';
 
 function Navigation() {
   const location = useLocation();
   const { savedArticles } = useArticles();
+  const { user, logout, isAuthenticated } = useAuth();
 
   return (
     <nav>
@@ -23,19 +25,28 @@ function Navigation() {
             >
               Search
             </Link>
-            {/* ⚠️ SECURITY ISSUE: No authentication required to access saved articles */}
+
+            
             <Link 
               to="/saved" 
               className={`nav-link ${location.pathname === '/saved' ? 'active' : ''}`}
             >
-              Saved Articles ({savedArticles.length})
+              Saved Articles ({savedArticles.length || 0})
             </Link>
           </div>
         </div>
-        {/* ⚠️ SECURITY ISSUE: No login/logout functionality */}
+        {isAuthenticated ? (
         <div className="nav-user">
-          No authentication required
+          <span className="username">👤 {user.username}</span>
+          {user.role === 'admin' && (
+            <span className="admin-badge">Admin</span>
+          )}
+          <button onClick={logout} className="logout-button">Logout</button>
         </div>
+        ) : (
+          <Link to="/login" className="login-link">Login</Link>
+        )}
+        
       </div>
     </nav>
   );
